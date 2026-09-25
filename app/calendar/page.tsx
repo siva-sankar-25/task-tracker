@@ -16,6 +16,7 @@ import { createClient } from '@/lib/supabase/client'
 import Navbar from '@/components/Navbar'
 import CalendarDayCell from '@/components/CalendarDayCell'
 import CalendarTaskCard from '@/components/CalendarTaskCard'
+import { getDisplayName } from '@/lib/getDisplayName'
 import { Task } from '@/types/database'
 
 function formatDateKey(year: number, month: number, day: number): string {
@@ -39,6 +40,7 @@ export default function CalendarPage() {
   const [currentDate, setCurrentDate] = useState(() => new Date())
   const [tasks, setTasks] = useState<Task[]>([])
   const [userEmail, setUserEmail] = useState<string | null>(null)
+  const [userName, setUserName] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [activeTask, setActiveTask] = useState<Task | null>(null)
   const [toast, setToast] = useState<{
@@ -81,6 +83,7 @@ export default function CalendarPage() {
         }
 
         setUserEmail(user.email ?? null)
+        setUserName(getDisplayName(user))
 
         const { data: rawTasks, error: tasksError } = await supabase
           .from('tasks')
@@ -265,7 +268,7 @@ export default function CalendarPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
-      <Navbar userEmail={userEmail} />
+      <Navbar userName={userName} userEmail={userEmail} />
 
       {/* Floating Toast Notification */}
       {toast && (
@@ -281,7 +284,7 @@ export default function CalendarPage() {
             <button
               type="button"
               onClick={() => setToast(null)}
-              className="ml-2 rounded p-0.5 hover:bg-black/10 focus:outline-none"
+              className="ml-2 rounded p-0.5 hover:bg-black/10 focus:outline-none cursor-pointer"
             >
               ✕
             </button>
@@ -305,7 +308,7 @@ export default function CalendarPage() {
             <button
               type="button"
               onClick={handleToday}
-              className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+              className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs cursor-pointer"
             >
               Today
             </button>
@@ -315,7 +318,7 @@ export default function CalendarPage() {
                 type="button"
                 onClick={handlePrevMonth}
                 aria-label="Previous month"
-                className="rounded-l-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+                className="rounded-l-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-all duration-200 ease-out hover:-translate-y-0.5 cursor-pointer"
               >
                 ← Prev
               </button>
@@ -326,7 +329,7 @@ export default function CalendarPage() {
                 type="button"
                 onClick={handleNextMonth}
                 aria-label="Next month"
-                className="rounded-r-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+                className="rounded-r-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-all duration-200 ease-out hover:-translate-y-0.5 cursor-pointer"
               >
                 Next →
               </button>
@@ -334,7 +337,7 @@ export default function CalendarPage() {
 
             <Link
               href="/tasks/new"
-              className="inline-flex items-center rounded-md bg-blue-600 px-3.5 py-1.5 text-xs font-medium text-white shadow-2xs hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center rounded-md bg-blue-600 px-3.5 py-1.5 text-xs font-medium text-white shadow-2xs hover:bg-blue-700 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs cursor-pointer"
             >
               + New Task
             </Link>

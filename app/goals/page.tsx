@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import Navbar from '@/components/Navbar'
 import GoalDeleteButton from '@/components/GoalDeleteButton'
+import { getDisplayName } from '@/lib/getDisplayName'
 import { Goal } from '@/types/database'
 
 export default async function GoalsPage() {
@@ -16,6 +17,8 @@ export default async function GoalsPage() {
   if (authError || !user) {
     redirect('/login')
   }
+
+  const displayName = getDisplayName(user)
 
   // Fetch goals
   const { data: rawGoals, error: goalsError } = await supabase
@@ -48,7 +51,7 @@ export default async function GoalsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
-      <Navbar userEmail={user.email} />
+      <Navbar userName={displayName} userEmail={user.email} />
 
       <main className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 sm:pb-6 border-b border-gray-200 dark:border-zinc-800 gap-4">
@@ -62,7 +65,7 @@ export default async function GoalsPage() {
           </div>
           <Link
             href="/goals/new"
-            className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors self-start sm:self-auto"
+            className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-sm self-start sm:self-auto cursor-pointer"
           >
             + New Goal
           </Link>
@@ -86,7 +89,7 @@ export default async function GoalsPage() {
               <div className="mt-6">
                 <Link
                   href="/goals/new"
-                  className="inline-flex items-center rounded-md bg-blue-600 px-3.5 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+                  className="inline-flex items-center rounded-md bg-blue-600 px-3.5 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs cursor-pointer"
                 >
                   Create Goal
                 </Link>
@@ -107,7 +110,7 @@ export default async function GoalsPage() {
                 return (
                   <div
                     key={goal.id}
-                    className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+                    className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
                   >
                     <div>
                       <div className="flex items-start justify-between gap-2">
@@ -117,7 +120,7 @@ export default async function GoalsPage() {
                         <div className="flex items-center gap-1 shrink-0 -mt-1 -mr-1">
                           <Link
                             href={`/goals/${goal.id}/edit`}
-                            className="inline-flex items-center justify-center rounded-md p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40 dark:hover:text-blue-400 transition-colors"
+                            className="inline-flex items-center justify-center rounded-md p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40 dark:hover:text-blue-400 transition-all duration-200 ease-out hover:-translate-y-0.5"
                             title="Edit goal"
                             aria-label={`Edit goal ${goal.title}`}
                           >

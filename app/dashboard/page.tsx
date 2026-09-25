@@ -2,8 +2,10 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import Navbar from '@/components/Navbar'
-import TaskStatusControl from '@/components/TaskStatusControl'
+import TaskCheckbox from '@/components/TaskCheckbox'
 import NotificationReminder from '@/components/NotificationReminder'
+import AntigravityCanvas from '@/components/AntigravityCanvas'
+import { getDisplayName } from '@/lib/getDisplayName'
 import { Task, Goal } from '@/types/database'
 
 export default async function DashboardPage() {
@@ -17,6 +19,8 @@ export default async function DashboardPage() {
   if (authError || !user) {
     redirect('/login')
   }
+
+  const displayName = getDisplayName(user)
 
   // Fetch tasks and goals in parallel
   const [{ data: rawTasks }, { data: rawGoals }] = await Promise.all([
@@ -88,16 +92,18 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
-      <Navbar userEmail={user.email} />
+    <div className="relative min-h-screen text-gray-900 dark:text-zinc-100">
+      <AntigravityCanvas opacity={0.3} />
+      <div className="relative z-10">
+        <Navbar userName={displayName} userEmail={user.email} />
 
-      <main className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+        <main className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
         {/* Welcome Banner */}
         <div className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Welcome, {user.email}
+                Welcome, {displayName}
               </h1>
               <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
                 Track your agenda for today, overdue tasks, and milestone progression.
@@ -106,13 +112,13 @@ export default async function DashboardPage() {
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <Link
                 href="/tasks/new"
-                className="inline-flex flex-1 sm:flex-none items-center justify-center rounded-md bg-blue-600 px-3.5 py-2 text-sm font-medium text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                className="inline-flex flex-1 sm:flex-none items-center justify-center rounded-md bg-blue-600 px-3.5 py-2 text-sm font-medium text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-sm"
               >
                 + New Task
               </Link>
               <Link
                 href="/goals/new"
-                className="inline-flex flex-1 sm:flex-none items-center justify-center rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-colors"
+                className="inline-flex flex-1 sm:flex-none items-center justify-center rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs"
               >
                 + New Goal
               </Link>
@@ -169,7 +175,7 @@ export default async function DashboardPage() {
             </div>
             <Link
               href="/tasks"
-              className="text-xs sm:text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
+              className="text-xs sm:text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 transition-colors"
             >
               View all tasks →
             </Link>
@@ -204,51 +210,51 @@ export default async function DashboardPage() {
                   return (
                     <li
                       key={task.id}
-                      className="p-4 sm:p-5 transition-colors hover:bg-gray-50/50 dark:hover:bg-zinc-800/30"
+                      className="p-4 sm:p-5 transition-all duration-200 ease-out hover:bg-gray-50/70 dark:hover:bg-zinc-800/40 hover:-translate-y-0.5 hover:shadow-xs"
                     >
                       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="flex items-start gap-3 min-w-0">
-                          <div className="pt-0.5 shrink-0">
-                            <TaskStatusControl
-                              taskId={task.id}
-                              initialStatus={task.status}
-                            />
-                          </div>
-                          <div className="min-w-0">
-                            <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white break-words">
-                              {task.title}
-                            </h3>
-                            {task.description && (
-                              <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400 line-clamp-2 break-words">
-                                {task.description}
-                              </p>
-                            )}
-                            <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
-                              {/* Overdue/Today badge */}
-                              <span
-                                className={`inline-flex items-center rounded-md px-2 py-0.5 font-medium ${
-                                  isOverdue
-                                    ? 'bg-red-100 text-red-800 dark:bg-red-950/80 dark:text-red-300 font-semibold'
-                                    : 'bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300'
-                                }`}
-                              >
-                                {isOverdue
-                                  ? `⚠️ Overdue (${formattedDueDate})`
-                                  : `📅 Due Today`}
+                        <TaskCheckbox
+                          taskId={task.id}
+                          initialStatus={task.status}
+                          taskTitle={task.title}
+                        >
+                          {task.description && (
+                            <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400 line-clamp-2 break-words">
+                              {task.description}
+                            </p>
+                          )}
+                          <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
+                            {/* Overdue/Today badge */}
+                            <span
+                              className={`inline-flex items-center rounded-md px-2 py-0.5 font-medium ${
+                                isOverdue
+                                  ? 'bg-red-100 text-red-800 dark:bg-red-950/80 dark:text-red-300 font-semibold'
+                                  : 'bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300'
+                              }`}
+                            >
+                              {isOverdue
+                                ? `⚠️ Overdue (${formattedDueDate})`
+                                : `📅 Due Today`}
+                            </span>
+
+                            {/* In progress status badge if relevant */}
+                            {task.status === 'in_progress' && (
+                              <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-0.5 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 dark:bg-blue-950/50 dark:text-blue-300 dark:ring-blue-900">
+                                In Progress
                               </span>
+                            )}
 
-                              {/* Priority tag */}
-                              {getPriorityBadge(task.priority)}
+                            {/* Priority tag */}
+                            {getPriorityBadge(task.priority)}
 
-                              {/* Goal */}
-                              {goalTitle && (
-                                <span className="inline-flex items-center gap-1 rounded-md bg-purple-50 px-2 py-0.5 font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10 dark:bg-purple-950/50 dark:text-purple-300 dark:ring-purple-900">
-                                  <span>🎯</span> {goalTitle}
-                                </span>
-                              )}
-                            </div>
+                            {/* Goal */}
+                            {goalTitle && (
+                              <span className="inline-flex items-center gap-1 rounded-md bg-purple-50 px-2 py-0.5 font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10 dark:bg-purple-950/50 dark:text-purple-300 dark:ring-purple-900">
+                                <span>🎯</span> {goalTitle}
+                              </span>
+                            )}
                           </div>
-                        </div>
+                        </TaskCheckbox>
                       </div>
                     </li>
                   )
@@ -266,7 +272,7 @@ export default async function DashboardPage() {
             </h2>
             <Link
               href="/goals"
-              className="text-xs sm:text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
+              className="text-xs sm:text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 transition-colors"
             >
               View all goals →
             </Link>
@@ -283,7 +289,7 @@ export default async function DashboardPage() {
               <div className="mt-4">
                 <Link
                   href="/goals/new"
-                  className="inline-flex items-center rounded-md bg-blue-600 px-3.5 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+                  className="inline-flex items-center rounded-md bg-blue-600 px-3.5 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs cursor-pointer"
                 >
                   Create Goal
                 </Link>
@@ -304,7 +310,7 @@ export default async function DashboardPage() {
                 return (
                   <div
                     key={goal.id}
-                    className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+                    className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
                   >
                     <div>
                       <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white break-words">
@@ -351,6 +357,7 @@ export default async function DashboardPage() {
           )}
         </section>
       </main>
+      </div>
     </div>
   )
 }

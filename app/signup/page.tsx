@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import ThemeToggle from '@/components/ThemeToggle'
+import AntigravityCanvas from '@/components/AntigravityCanvas'
 
 export default function SignupPage() {
   const [email, setEmail] = useState('')
@@ -33,12 +34,14 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-gray-50 px-4 py-8 sm:py-12 sm:px-6 lg:px-8 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100 transition-colors">
-      <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
+    <div className="relative flex min-h-screen items-center justify-center px-4 py-8 sm:py-12 sm:px-6 lg:px-8 text-gray-900 dark:text-zinc-100">
+      <AntigravityCanvas />
+
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10">
         <ThemeToggle />
       </div>
 
-      <div className="w-full max-w-md space-y-6 sm:space-y-8 rounded-xl bg-white p-6 sm:p-8 shadow-xs dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 transition-colors">
+      <div className="relative z-10 w-full max-w-md space-y-6 sm:space-y-8 rounded-xl bg-white p-6 sm:p-8 shadow-xs dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 transition-colors">
         <div>
           <h2 className="text-center text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
             Create an account

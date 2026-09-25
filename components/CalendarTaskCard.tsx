@@ -49,10 +49,10 @@ export default function CalendarTaskCard({
       style={style}
       {...attributes}
       {...listeners}
-      className={`group relative flex items-center justify-between gap-1.5 rounded-md border px-2 py-1 text-xs shadow-2xs select-none transition-all ${
+      className={`group relative flex items-center justify-between gap-1.5 rounded-md border px-2 py-1 text-xs shadow-2xs select-none transition-all duration-200 ease-out ${
         isOverlay
           ? 'cursor-grabbing shadow-lg scale-105 z-50 ring-2 ring-blue-500 opacity-95'
-          : 'cursor-grab active:cursor-grabbing hover:shadow-xs'
+          : 'cursor-grab active:cursor-grabbing hover:-translate-y-0.5 hover:shadow-xs'
       } ${isDragging ? 'opacity-30' : ''} ${getPriorityClasses()} ${
         isDone ? 'opacity-60' : ''
       }`}

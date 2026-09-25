@@ -2,9 +2,10 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import Navbar from '@/components/Navbar'
-import TaskStatusControl from '@/components/TaskStatusControl'
+import TaskCheckbox from '@/components/TaskCheckbox'
 import TaskFilters from '@/components/TaskFilters'
 import TaskDeleteButton from '@/components/TaskDeleteButton'
+import { getDisplayName } from '@/lib/getDisplayName'
 import { Task, Goal } from '@/types/database'
 
 interface TasksPageProps {
@@ -31,6 +32,8 @@ export default async function TasksPage(props: TasksPageProps) {
   if (authError || !user) {
     redirect('/login')
   }
+
+  const displayName = getDisplayName(user)
 
   // Build Supabase query with filters
   let tasksQuery = supabase
@@ -115,7 +118,7 @@ export default async function TasksPage(props: TasksPageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
-      <Navbar userEmail={user.email} />
+      <Navbar userName={displayName} userEmail={user.email} />
 
       <main className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 sm:pb-6 border-b border-gray-200 dark:border-zinc-800 gap-4">
@@ -129,7 +132,7 @@ export default async function TasksPage(props: TasksPageProps) {
           </div>
           <Link
             href="/tasks/new"
-            className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors self-start sm:self-auto"
+            className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-sm self-start sm:self-auto cursor-pointer"
           >
             + New Task
           </Link>
@@ -165,14 +168,14 @@ export default async function TasksPage(props: TasksPageProps) {
                 {isFiltered ? (
                   <Link
                     href="/tasks"
-                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-colors"
+                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs cursor-pointer"
                   >
                     Clear Filters
                   </Link>
                 ) : (
                   <Link
                     href="/tasks/new"
-                    className="inline-flex items-center rounded-md bg-blue-600 px-3.5 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+                    className="inline-flex items-center rounded-md bg-blue-600 px-3.5 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs cursor-pointer"
                   >
                     Create Task
                   </Link>
@@ -198,62 +201,56 @@ export default async function TasksPage(props: TasksPageProps) {
                   return (
                     <li
                       key={task.id}
-                      className={`p-4 sm:p-5 transition-colors ${
+                      className={`p-4 sm:p-5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs ${
                         isDone
-                          ? 'bg-gray-50/70 dark:bg-zinc-900/40'
-                          : 'hover:bg-gray-50/50 dark:hover:bg-zinc-800/30'
+                          ? 'bg-gray-50/70 dark:bg-zinc-900/40 hover:bg-gray-100/60 dark:hover:bg-zinc-800/40'
+                          : 'hover:bg-gray-50/60 dark:hover:bg-zinc-800/30'
                       }`}
                     >
                       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="flex items-start gap-3 min-w-0 flex-1">
-                          <div className="pt-0.5 shrink-0">
-                            <TaskStatusControl
-                              taskId={task.id}
-                              initialStatus={task.status}
-                            />
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <h2
-                              className={`text-sm sm:text-base font-semibold break-words ${
-                                isDone
-                                  ? 'line-through text-gray-400 dark:text-zinc-500'
-                                  : 'text-gray-900 dark:text-white'
-                              }`}
-                            >
-                              {task.title}
-                            </h2>
-                            {task.description && (
-                              <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400 break-words">
-                                {task.description}
-                              </p>
+                        <TaskCheckbox
+                          taskId={task.id}
+                          initialStatus={task.status}
+                          taskTitle={task.title}
+                        >
+                          {task.description && (
+                            <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400 break-words">
+                              {task.description}
+                            </p>
+                          )}
+
+                          <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
+                            {/* In progress badge */}
+                            {task.status === 'in_progress' && (
+                              <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-0.5 font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 dark:bg-blue-950/50 dark:text-blue-300 dark:ring-blue-900">
+                                In Progress
+                              </span>
                             )}
 
-                            <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
-                              {/* Color-coded priority tag */}
-                              {getPriorityBadge(task.priority)}
+                            {/* Color-coded priority tag */}
+                            {getPriorityBadge(task.priority)}
 
-                              {/* Goal badge */}
-                              {goalTitle && (
-                                <span className="inline-flex items-center gap-1 rounded-md bg-purple-50 px-2 py-0.5 font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10 dark:bg-purple-950/50 dark:text-purple-300 dark:ring-purple-900">
-                                  <span>🎯</span> {goalTitle}
-                                </span>
-                              )}
+                            {/* Goal badge */}
+                            {goalTitle && (
+                              <span className="inline-flex items-center gap-1 rounded-md bg-purple-50 px-2 py-0.5 font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10 dark:bg-purple-950/50 dark:text-purple-300 dark:ring-purple-900">
+                                <span>🎯</span> {goalTitle}
+                              </span>
+                            )}
 
-                              {/* Due date */}
-                              {formattedDueDate && (
-                                <span className="inline-flex items-center gap-1 text-gray-500 dark:text-gray-400">
-                                  <span>📅</span> Due {formattedDueDate}
-                                </span>
-                              )}
-                            </div>
+                            {/* Due date */}
+                            {formattedDueDate && (
+                              <span className="inline-flex items-center gap-1 text-gray-500 dark:text-gray-400">
+                                <span>📅</span> Due {formattedDueDate}
+                              </span>
+                            )}
                           </div>
-                        </div>
+                        </TaskCheckbox>
 
                         {/* Actions (Edit & Delete) */}
                         <div className="flex items-center self-end sm:self-center gap-1 sm:gap-2 shrink-0">
                           <Link
                             href={`/tasks/${task.id}/edit`}
-                            className="inline-flex items-center justify-center rounded-md p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40 dark:hover:text-blue-400 transition-colors"
+                            className="inline-flex items-center justify-center rounded-md p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40 dark:hover:text-blue-400 transition-all duration-200 ease-out hover:-translate-y-0.5"
                             title="Edit task"
                             aria-label={`Edit task ${task.title}`}
                           >

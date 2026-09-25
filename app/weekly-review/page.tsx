@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import Navbar from '@/components/Navbar'
+import { getDisplayName } from '@/lib/getDisplayName'
 import { Task, Goal } from '@/types/database'
 
 export default async function WeeklyReviewPage() {
@@ -15,6 +16,8 @@ export default async function WeeklyReviewPage() {
   if (authError || !user) {
     redirect('/login')
   }
+
+  const displayName = getDisplayName(user)
 
   // Calculate 7-day range (today minus 6 days through today)
   const now = new Date()
@@ -131,7 +134,7 @@ export default async function WeeklyReviewPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
-      <Navbar userEmail={user.email} />
+      <Navbar userName={displayName} userEmail={user.email} />
 
       <main className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-8">
         {/* Header Banner */}
@@ -155,7 +158,7 @@ export default async function WeeklyReviewPage() {
         {/* Metric Cards Grid */}
         <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {/* Completion Rate Card */}
-          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
+          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700">
             <dt className="text-xs font-medium text-gray-500 dark:text-gray-400">
               Weekly Completion Rate
             </dt>
@@ -170,7 +173,7 @@ export default async function WeeklyReviewPage() {
           </div>
 
           {/* Completed Card */}
-          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
+          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700">
             <dt className="text-xs font-medium text-gray-500 dark:text-gray-400">
               Completed This Week
             </dt>
@@ -183,7 +186,7 @@ export default async function WeeklyReviewPage() {
           </div>
 
           {/* Missed Card */}
-          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
+          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700">
             <dt className="text-xs font-medium text-gray-500 dark:text-gray-400">
               Missed This Week
             </dt>
@@ -196,7 +199,7 @@ export default async function WeeklyReviewPage() {
           </div>
 
           {/* Goals Worked On Card */}
-          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
+          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700">
             <dt className="text-xs font-medium text-gray-500 dark:text-gray-400">
               Goals Advanced
             </dt>
@@ -245,7 +248,7 @@ export default async function WeeklyReviewPage() {
                   return (
                     <li
                       key={task.id}
-                      className="p-4 sm:p-5 transition-colors bg-emerald-50/20 dark:bg-emerald-950/10"
+                      className="p-4 sm:p-5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs bg-emerald-50/20 dark:bg-emerald-950/10 hover:bg-emerald-50/40 dark:hover:bg-emerald-950/20"
                     >
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <div className="flex items-start gap-3 min-w-0">
@@ -327,7 +330,7 @@ export default async function WeeklyReviewPage() {
                   return (
                     <li
                       key={task.id}
-                      className="p-4 sm:p-5 transition-colors bg-red-50/20 dark:bg-red-950/10"
+                      className="p-4 sm:p-5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs bg-red-50/20 dark:bg-red-950/10 hover:bg-red-50/40 dark:hover:bg-red-950/20"
                     >
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <div className="flex items-start gap-3 min-w-0">
@@ -387,7 +390,7 @@ export default async function WeeklyReviewPage() {
             </div>
             <Link
               href="/goals"
-              className="text-xs sm:text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
+              className="text-xs sm:text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 transition-colors"
             >
               View all goals →
             </Link>
@@ -417,7 +420,7 @@ export default async function WeeklyReviewPage() {
                 return (
                   <div
                     key={goal.id}
-                    className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+                    className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2">

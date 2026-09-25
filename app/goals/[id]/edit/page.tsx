@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import Navbar from '@/components/Navbar'
 import GoalEditForm from './GoalEditForm'
+import { getDisplayName } from '@/lib/getDisplayName'
 import { Goal } from '@/types/database'
 
 interface EditGoalPageProps {
@@ -22,6 +23,8 @@ export default async function EditGoalPage(props: EditGoalPageProps) {
     redirect('/login')
   }
 
+  const displayName = getDisplayName(user)
+
   const { data: goal, error: goalError } = await supabase
     .from('goals')
     .select('*')
@@ -35,7 +38,7 @@ export default async function EditGoalPage(props: EditGoalPageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
-      <Navbar userEmail={user.email} />
+      <Navbar userName={displayName} userEmail={user.email} />
 
       <main className="mx-auto max-w-2xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
