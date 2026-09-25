@@ -18,6 +18,7 @@ export default function Navbar({ userEmail }: NavbarProps) {
     { name: 'Dashboard', href: '/dashboard' },
     { name: 'Goals', href: '/goals' },
     { name: 'Tasks', href: '/tasks' },
+    { name: 'Calendar', href: '/calendar' },
     { name: 'Weekly Review', href: '/weekly-review' },
   ]
 
