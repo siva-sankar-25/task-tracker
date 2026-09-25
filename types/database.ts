@@ -6,6 +6,7 @@ export interface Goal {
   target_date?: string | null
   progress?: number | null
   created_at?: string
+  updated_at?: string
 }
 
 export type TaskPriority = 'low' | 'medium' | 'high'
@@ -29,4 +30,5 @@ export interface Task {
     title: string
   } | null
   created_at?: string
+  updated_at?: string
 }
