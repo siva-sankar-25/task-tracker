@@ -267,7 +267,7 @@ export default function CalendarPage() {
   const weekDayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
+    <div className="min-h-screen text-[var(--text-primary)]">
       <Navbar userName={userName} userEmail={userEmail} />
 
       {/* Floating Toast Notification */}
@@ -294,12 +294,12 @@ export default function CalendarPage() {
 
       <main className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-6">
         {/* Calendar Header Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-gray-200 dark:border-zinc-800">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-primary)]">
               Calendar
             </h1>
-            <p className="mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-1 text-xs sm:text-sm text-[var(--text-secondary)]">
               Drag and drop task cards between days to reschedule deadlines.
             </p>
           </div>
@@ -308,7 +308,7 @@ export default function CalendarPage() {
             <button
               type="button"
               onClick={handleToday}
-              className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs cursor-pointer"
+              className="rounded-md border border-[var(--border-color)] bg-[var(--card-bg)] px-3 py-1.5 text-xs font-semibold text-[var(--text-primary)] shadow-2xs hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs cursor-pointer"
             >
               Today
             </button>
@@ -318,18 +318,18 @@ export default function CalendarPage() {
                 type="button"
                 onClick={handlePrevMonth}
                 aria-label="Previous month"
-                className="rounded-l-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-all duration-200 ease-out hover:-translate-y-0.5 cursor-pointer"
+                className="rounded-l-md border border-[var(--border-color)] bg-[var(--card-bg)] px-2.5 py-1.5 text-xs font-medium text-[var(--text-primary)] hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 ease-out hover:-translate-y-0.5 cursor-pointer"
               >
                 ← Prev
               </button>
-              <span className="flex items-center border-y border-gray-300 bg-white px-3 py-1.5 text-xs font-bold text-gray-900 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white min-w-[130px] justify-center">
+              <span className="flex items-center border-y border-[var(--border-color)] bg-[var(--card-bg)] px-3 py-1.5 text-xs font-bold text-[var(--text-primary)] min-w-[130px] justify-center">
                 {monthLabel}
               </span>
               <button
                 type="button"
                 onClick={handleNextMonth}
                 aria-label="Next month"
-                className="rounded-r-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-all duration-200 ease-out hover:-translate-y-0.5 cursor-pointer"
+                className="rounded-r-md border border-[var(--border-color)] bg-[var(--card-bg)] px-2.5 py-1.5 text-xs font-medium text-[var(--text-primary)] hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 ease-out hover:-translate-y-0.5 cursor-pointer"
               >
                 Next →
               </button>
@@ -350,10 +350,10 @@ export default function CalendarPage() {
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
         >
-          <div className="rounded-xl border border-gray-200 bg-white p-3 sm:p-5 shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
+          <div className="rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-3 sm:p-5 shadow-xs transition-colors">
             {loading ? (
               <div className="flex h-96 items-center justify-center">
-                <span className="text-sm text-gray-400 dark:text-zinc-500 animate-pulse">
+                <span className="text-sm text-[var(--text-secondary)] animate-pulse">
                   Loading calendar tasks...
                 </span>
               </div>
@@ -365,7 +365,7 @@ export default function CalendarPage() {
                     {weekDayHeaders.map((dayName) => (
                       <div
                         key={dayName}
-                        className="py-1 text-center text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                        className="py-1 text-center text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider"
                       >
                         {dayName}
                       </div>
@@ -402,3 +402,4 @@ export default function CalendarPage() {
     </div>
   )
 }
+

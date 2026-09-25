@@ -50,16 +50,16 @@ export default async function GoalsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
+    <div className="min-h-screen text-[var(--text-primary)]">
       <Navbar userName={displayName} userEmail={user.email} />
 
       <main className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 sm:pb-6 border-b border-gray-200 dark:border-zinc-800 gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 sm:pb-6 border-b border-[var(--border-color)] gap-4">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-primary)]">
               Goals
             </h1>
-            <p className="mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-1 text-xs sm:text-sm text-[var(--text-secondary)]">
               Track and manage your long-term milestones and objectives.
             </p>
           </div>
@@ -72,18 +72,18 @@ export default async function GoalsPage() {
         </div>
 
         {goalsError && (
-          <div className="rounded-md bg-red-50 p-4 text-sm text-red-700 dark:bg-red-950 dark:text-red-200 border border-red-200 dark:border-red-900">
+          <div className="rounded-md bg-red-500/10 p-4 text-sm text-red-600 dark:text-red-300 border border-red-500/20">
             Error loading goals: {goalsError.message}
           </div>
         )}
 
         <div>
           {goals.length === 0 ? (
-            <div className="text-center py-12 rounded-xl border-2 border-dashed border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 sm:p-8 transition-colors">
-              <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+            <div className="text-center py-12 rounded-xl border-2 border-dashed border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-6 sm:p-8 transition-colors">
+              <h3 className="text-base font-semibold text-[var(--text-primary)]">
                 No goals yet
               </h3>
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-1 text-sm text-[var(--text-secondary)]">
                 Get started by creating your first goal.
               </p>
               <div className="mt-6">
@@ -110,17 +110,17 @@ export default async function GoalsPage() {
                 return (
                   <div
                     key={goal.id}
-                    className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
+                    className="flex flex-col justify-between rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-5 sm:p-6 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md"
                   >
                     <div>
                       <div className="flex items-start justify-between gap-2">
-                        <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white break-words flex-1">
+                        <h2 className="text-base sm:text-lg font-semibold text-[var(--text-primary)] break-words flex-1">
                           {goal.title}
                         </h2>
                         <div className="flex items-center gap-1 shrink-0 -mt-1 -mr-1">
                           <Link
                             href={`/goals/${goal.id}/edit`}
-                            className="inline-flex items-center justify-center rounded-md p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40 dark:hover:text-blue-400 transition-all duration-200 ease-out hover:-translate-y-0.5"
+                            className="inline-flex items-center justify-center rounded-md p-1.5 text-[var(--text-secondary)] hover:text-blue-600 hover:bg-blue-500/10 transition-all duration-200 ease-out hover:-translate-y-0.5"
                             title="Edit goal"
                             aria-label={`Edit goal ${goal.title}`}
                           >
@@ -147,7 +147,7 @@ export default async function GoalsPage() {
                       </div>
 
                       {goal.description && (
-                        <p className="mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-3 break-words">
+                        <p className="mt-2 text-xs sm:text-sm text-[var(--text-secondary)] line-clamp-3 break-words">
                           {goal.description}
                         </p>
                       )}
@@ -156,11 +156,11 @@ export default async function GoalsPage() {
                     <div className="mt-6 space-y-4">
                       {/* Progress Bar */}
                       <div>
-                        <div className="flex justify-between text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">
+                        <div className="flex justify-between text-xs font-medium text-[var(--text-secondary)] mb-1.5">
                           <span>Progress</span>
                           <span>{progress}%</span>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-zinc-800 overflow-hidden">
+                        <div className="w-full bg-black/10 dark:bg-white/10 rounded-full h-2.5 overflow-hidden">
                           <div
                             className={`h-2.5 rounded-full transition-all duration-300 ${
                               progress === 100
@@ -175,9 +175,9 @@ export default async function GoalsPage() {
                       </div>
 
                       {/* Target Date */}
-                      <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-zinc-800 text-xs text-gray-500 dark:text-gray-400">
+                      <div className="flex items-center justify-between pt-2 border-t border-[var(--border-color)] text-xs text-[var(--text-secondary)]">
                         <span>Target Date:</span>
-                        <span className="font-medium text-gray-700 dark:text-gray-300">
+                        <span className="font-medium text-[var(--text-primary)]">
                           {formattedDate}
                         </span>
                       </div>
@@ -192,3 +192,4 @@ export default async function GoalsPage() {
     </div>
   )
 }
+

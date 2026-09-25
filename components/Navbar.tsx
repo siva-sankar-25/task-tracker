@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import LogoutButton from '@/components/LogoutButton'
-import ThemeToggle from '@/components/ThemeToggle'
+import ThemeModeToggle from '@/components/ThemeModeToggle'
 
 interface NavbarProps {
   userEmail?: string | null
@@ -35,14 +35,14 @@ export default function Navbar({ userEmail, userName }: NavbarProps) {
   const isSettingsActive = pathname.startsWith('/settings')
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur-sm dark:border-zinc-800 dark:bg-zinc-900/95 transition-colors">
+    <header className="sticky top-0 z-50 border-b border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md transition-colors">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo & Desktop Nav */}
           <div className="flex items-center gap-5 md:gap-8">
             <Link
               href="/dashboard"
-              className="text-xl font-bold tracking-tight text-gray-900 dark:text-white hover:opacity-90 transition-all duration-200 ease-out hover:-translate-y-0.5"
+              className="text-xl font-bold tracking-tight text-[var(--text-primary)] hover:opacity-90 transition-all duration-200 ease-out hover:-translate-y-0.5"
             >
               Task Tracker
             </Link>
@@ -57,8 +57,8 @@ export default function Navbar({ userEmail, userName }: NavbarProps) {
                     href={link.href}
                     className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ease-out hover:-translate-y-0.5 ${
                       active
-                        ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 font-semibold shadow-2xs'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-zinc-800'
+                        ? 'bg-blue-500/15 text-blue-600 dark:text-blue-400 font-semibold shadow-2xs'
+                        : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-black/5 dark:hover:bg-white/5'
                     }`}
                   >
                     {link.name}
@@ -71,18 +71,19 @@ export default function Navbar({ userEmail, userName }: NavbarProps) {
           {/* Desktop Right items */}
           <div className="hidden sm:flex sm:items-center sm:gap-3">
             {displayName && (
-              <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 font-medium truncate max-w-[180px]">
+              <span className="text-xs md:text-sm text-[var(--text-secondary)] font-medium truncate max-w-[180px]">
                 {displayName}
               </span>
             )}
+            <ThemeModeToggle />
             <Link
               href="/settings"
-              title="Settings"
-              aria-label="Settings"
-              className={`inline-flex h-9 w-9 items-center justify-center rounded-md border text-gray-700 shadow-2xs hover:bg-gray-100 dark:text-zinc-300 dark:hover:bg-zinc-800 transition-all duration-200 ease-out hover:-translate-y-0.5 ${
+              title="Settings & Appearance"
+              aria-label="Settings & Appearance"
+              className={`inline-flex h-9 w-9 items-center justify-center rounded-md border shadow-2xs hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 ease-out hover:-translate-y-0.5 ${
                 isSettingsActive
-                  ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-500'
-                  : 'border-gray-200 bg-white dark:border-zinc-800 dark:bg-zinc-900'
+                  ? 'border-blue-500 bg-blue-500/15 text-blue-600 dark:text-blue-400'
+                  : 'border-[var(--border-color)] bg-[var(--card-bg)] text-[var(--text-primary)]'
               }`}
             >
               <svg
@@ -105,20 +106,20 @@ export default function Navbar({ userEmail, userName }: NavbarProps) {
                 />
               </svg>
             </Link>
-            <ThemeToggle />
             <LogoutButton />
           </div>
 
           {/* Mobile Right items */}
           <div className="flex items-center gap-2 sm:hidden">
+            <ThemeModeToggle />
             <Link
               href="/settings"
-              title="Settings"
-              aria-label="Settings"
-              className={`inline-flex h-9 w-9 items-center justify-center rounded-md border text-gray-700 shadow-2xs hover:bg-gray-100 dark:text-zinc-300 dark:hover:bg-zinc-800 transition-colors ${
+              title="Settings & Appearance"
+              aria-label="Settings & Appearance"
+              className={`inline-flex h-9 w-9 items-center justify-center rounded-md border shadow-2xs hover:bg-black/5 dark:hover:bg-white/5 transition-colors ${
                 isSettingsActive
-                  ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300'
-                  : 'border-gray-200 bg-white dark:border-zinc-800 dark:bg-zinc-900'
+                  ? 'border-blue-500 bg-blue-500/15 text-blue-600 dark:text-blue-400'
+                  : 'border-[var(--border-color)] bg-[var(--card-bg)] text-[var(--text-primary)]'
               }`}
             >
               <svg
@@ -141,13 +142,12 @@ export default function Navbar({ userEmail, userName }: NavbarProps) {
                 />
               </svg>
             </Link>
-            <ThemeToggle />
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-expanded={mobileMenuOpen}
               aria-label="Toggle navigation menu"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 bg-white text-gray-700 shadow-xs hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 cursor-pointer transition-colors"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[var(--border-color)] bg-[var(--card-bg)] text-[var(--text-primary)] shadow-xs hover:bg-black/5 dark:hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer transition-colors"
             >
               {mobileMenuOpen ? (
                 <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -165,11 +165,11 @@ export default function Navbar({ userEmail, userName }: NavbarProps) {
 
       {/* Mobile Menu dropdown */}
       {mobileMenuOpen && (
-        <div className="sm:hidden border-t border-gray-200 bg-white px-4 pt-3 pb-4 shadow-lg dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="sm:hidden border-t border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md px-4 pt-3 pb-4 shadow-lg">
           {displayName && (
-            <div className="pb-3 mb-2 border-b border-gray-100 dark:border-zinc-800">
-              <p className="text-xs text-gray-500 dark:text-gray-400">Signed in as</p>
-              <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+            <div className="pb-3 mb-2 border-b border-[var(--border-color)]">
+              <p className="text-xs text-[var(--text-secondary)]">Signed in as</p>
+              <p className="text-sm font-medium text-[var(--text-primary)] truncate">
                 {displayName}
               </p>
             </div>
@@ -184,8 +184,8 @@ export default function Navbar({ userEmail, userName }: NavbarProps) {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
                     active
-                      ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 font-semibold'
-                      : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-zinc-800'
+                      ? 'bg-blue-500/15 text-blue-600 dark:text-blue-400 font-semibold'
+                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-black/5 dark:hover:bg-white/5'
                   }`}
                 >
                   {link.name}
@@ -197,14 +197,14 @@ export default function Navbar({ userEmail, userName }: NavbarProps) {
               onClick={() => setMobileMenuOpen(false)}
               className={`px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
                 isSettingsActive
-                  ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-zinc-800'
+                  ? 'bg-blue-500/15 text-blue-600 dark:text-blue-400 font-semibold'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-black/5 dark:hover:bg-white/5'
               }`}
             >
               Settings
             </Link>
           </nav>
-          <div className="mt-4 pt-3 border-t border-gray-100 dark:border-zinc-800 flex justify-end">
+          <div className="mt-4 pt-3 border-t border-[var(--border-color)] flex justify-end">
             <LogoutButton />
           </div>
         </div>
@@ -212,3 +212,4 @@ export default function Navbar({ userEmail, userName }: NavbarProps) {
     </header>
   )
 }
+

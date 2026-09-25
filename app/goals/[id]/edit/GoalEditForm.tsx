@@ -55,9 +55,9 @@ export default function GoalEditForm({ goal }: GoalEditFormProps) {
   }
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
+    <div className="rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-5 sm:p-6 shadow-xs transition-colors">
       {error && (
-        <div className="mb-6 rounded-md bg-red-50 p-4 text-sm text-red-700 dark:bg-red-950/80 dark:text-red-200 border border-red-200 dark:border-red-900">
+        <div className="mb-6 rounded-md bg-red-500/10 p-4 text-sm text-red-600 dark:text-red-300 border border-red-500/20">
           {error}
         </div>
       )}
@@ -66,7 +66,7 @@ export default function GoalEditForm({ goal }: GoalEditFormProps) {
         <div>
           <label
             htmlFor="title"
-            className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1"
           >
             Goal Title <span className="text-red-500">*</span>
           </label>
@@ -78,14 +78,14 @@ export default function GoalEditForm({ goal }: GoalEditFormProps) {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g., Learn TypeScript, Launch MVP"
-            className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:placeholder-zinc-500 transition-colors"
+            className="block w-full rounded-md border border-[var(--border-color)] bg-black/5 dark:bg-white/5 px-3 py-2 text-[var(--text-primary)] placeholder-[var(--text-secondary)]/60 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm transition-colors"
           />
         </div>
 
         <div>
           <label
             htmlFor="description"
-            className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1"
           >
             Description (Optional)
           </label>
@@ -96,7 +96,7 @@ export default function GoalEditForm({ goal }: GoalEditFormProps) {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Describe your goal and milestones..."
-            className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:placeholder-zinc-500 transition-colors"
+            className="block w-full rounded-md border border-[var(--border-color)] bg-black/5 dark:bg-white/5 px-3 py-2 text-[var(--text-primary)] placeholder-[var(--text-secondary)]/60 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm transition-colors"
           />
         </div>
 
@@ -104,7 +104,7 @@ export default function GoalEditForm({ goal }: GoalEditFormProps) {
           <div>
             <label
               htmlFor="target_date"
-              className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1"
             >
               Target Date (Optional)
             </label>
@@ -114,7 +114,7 @@ export default function GoalEditForm({ goal }: GoalEditFormProps) {
               type="date"
               value={targetDate}
               onChange={(e) => setTargetDate(e.target.value)}
-              className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:placeholder-zinc-500 transition-colors"
+              className="block w-full rounded-md border border-[var(--border-color)] bg-black/5 dark:bg-white/5 px-3 py-2 text-[var(--text-primary)] placeholder-[var(--text-secondary)]/60 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm transition-colors"
             />
           </div>
 
@@ -122,7 +122,7 @@ export default function GoalEditForm({ goal }: GoalEditFormProps) {
             <div className="flex justify-between items-center mb-1">
               <label
                 htmlFor="progress"
-                className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-xs sm:text-sm font-medium text-[var(--text-primary)]"
               >
                 Progress (%)
               </label>
@@ -148,16 +148,16 @@ export default function GoalEditForm({ goal }: GoalEditFormProps) {
                 max="100"
                 value={progress}
                 onChange={(e) => setProgress(e.target.value)}
-                className="w-18 rounded-md border border-gray-300 px-2 py-1 text-center text-xs sm:text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white transition-colors"
+                className="w-18 rounded-md border border-[var(--border-color)] bg-black/5 dark:bg-white/5 px-2 py-1 text-center text-xs sm:text-sm text-[var(--text-primary)] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors"
               />
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center sm:justify-end gap-3 pt-4 border-t border-gray-100 dark:border-zinc-800">
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center sm:justify-end gap-3 pt-4 border-t border-[var(--border-color)]">
           <Link
             href="/goals"
-            className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-300 dark:hover:bg-zinc-700 transition-colors"
+            className="inline-flex justify-center rounded-md border border-[var(--border-color)] bg-black/5 dark:bg-white/5 px-4 py-2 text-sm font-medium text-[var(--text-primary)] hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
           >
             Cancel
           </Link>
@@ -173,3 +173,4 @@ export default function GoalEditForm({ goal }: GoalEditFormProps) {
     </div>
   )
 }
+

@@ -133,22 +133,22 @@ export default async function WeeklyReviewPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
+    <div className="min-h-screen text-[var(--text-primary)]">
       <Navbar userName={displayName} userEmail={user.email} />
 
       <main className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-8">
         {/* Header Banner */}
-        <div className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
+        <div className="rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-5 sm:p-6 shadow-xs transition-colors">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-primary)]">
                 Weekly Review
               </h1>
-              <p className="mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+              <p className="mt-1 text-xs sm:text-sm text-[var(--text-secondary)]">
                 A summary of your productivity, completed achievements, and milestones over the last 7 days.
               </p>
             </div>
-            <div className="inline-flex items-center gap-1.5 self-start sm:self-auto rounded-full bg-blue-50 px-3.5 py-1.5 text-xs font-semibold text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-900">
+            <div className="inline-flex items-center gap-1.5 self-start sm:self-auto rounded-full bg-blue-500/10 px-3.5 py-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 border border-blue-500/20">
               <span>📅</span>
               <span>{dateRangeLabel}</span>
             </div>
@@ -158,14 +158,14 @@ export default async function WeeklyReviewPage() {
         {/* Metric Cards Grid */}
         <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {/* Completion Rate Card */}
-          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700">
-            <dt className="text-xs font-medium text-gray-500 dark:text-gray-400">
+          <div className="relative overflow-hidden rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-5 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md">
+            <dt className="text-xs font-medium text-[var(--text-secondary)]">
               Weekly Completion Rate
             </dt>
-            <dd className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <dd className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text-primary)]">
               {completionRate !== null ? `${completionRate}%` : '—'}
             </dd>
-            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-xs text-[var(--text-secondary)]">
               {completionRate !== null
                 ? `${completedThisWeek.length} of ${totalRelevant} tasks completed`
                 : 'No tasks due or completed this week'}
@@ -173,8 +173,8 @@ export default async function WeeklyReviewPage() {
           </div>
 
           {/* Completed Card */}
-          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700">
-            <dt className="text-xs font-medium text-gray-500 dark:text-gray-400">
+          <div className="relative overflow-hidden rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-5 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md">
+            <dt className="text-xs font-medium text-[var(--text-secondary)]">
               Completed This Week
             </dt>
             <dd className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-emerald-600 dark:text-emerald-400">
@@ -186,8 +186,8 @@ export default async function WeeklyReviewPage() {
           </div>
 
           {/* Missed Card */}
-          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700">
-            <dt className="text-xs font-medium text-gray-500 dark:text-gray-400">
+          <div className="relative overflow-hidden rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-5 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md">
+            <dt className="text-xs font-medium text-[var(--text-secondary)]">
               Missed This Week
             </dt>
             <dd className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-red-600 dark:text-red-400">
@@ -199,8 +199,8 @@ export default async function WeeklyReviewPage() {
           </div>
 
           {/* Goals Worked On Card */}
-          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700">
-            <dt className="text-xs font-medium text-gray-500 dark:text-gray-400">
+          <div className="relative overflow-hidden rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-5 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md">
+            <dt className="text-xs font-medium text-[var(--text-secondary)]">
               Goals Advanced
             </dt>
             <dd className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-purple-600 dark:text-purple-400">
@@ -216,7 +216,7 @@ export default async function WeeklyReviewPage() {
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+              <h2 className="text-lg sm:text-xl font-bold text-[var(--text-primary)]">
                 Completed This Week
               </h2>
               <span className="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
@@ -226,14 +226,14 @@ export default async function WeeklyReviewPage() {
           </div>
 
           {completedThisWeek.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-gray-300 bg-white p-6 sm:p-8 text-center shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+            <div className="rounded-xl border border-dashed border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-6 sm:p-8 text-center shadow-xs transition-colors">
+              <p className="text-sm text-[var(--text-secondary)]">
                 No tasks were marked as completed in the last 7 days.
               </p>
             </div>
           ) : (
-            <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
-              <ul className="divide-y divide-gray-200 dark:divide-zinc-800">
+            <div className="overflow-hidden rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md shadow-xs transition-colors">
+              <ul className="divide-y divide-[var(--border-color)]">
                 {completedThisWeek.map((task) => {
                   const goalTitle = task.goal_id ? goalMap.get(task.goal_id) : null
                   const dateStr = task.updated_at || task.created_at || task.due_date
@@ -248,7 +248,7 @@ export default async function WeeklyReviewPage() {
                   return (
                     <li
                       key={task.id}
-                      className="p-4 sm:p-5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs bg-emerald-50/20 dark:bg-emerald-950/10 hover:bg-emerald-50/40 dark:hover:bg-emerald-950/20"
+                      className="p-4 sm:p-5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs bg-emerald-500/10 hover:bg-emerald-500/15"
                     >
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <div className="flex items-start gap-3 min-w-0">
@@ -256,11 +256,11 @@ export default async function WeeklyReviewPage() {
                             ✓
                           </span>
                           <div className="min-w-0">
-                            <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white break-words">
+                            <h3 className="text-sm sm:text-base font-semibold text-[var(--text-primary)] break-words">
                               {task.title}
                             </h3>
                             {task.description && (
-                              <p className="mt-0.5 text-xs sm:text-sm text-gray-500 dark:text-gray-400 line-clamp-1 break-words">
+                              <p className="mt-0.5 text-xs sm:text-sm text-[var(--text-secondary)] line-clamp-1 break-words">
                                 {task.description}
                               </p>
                             )}
@@ -275,7 +275,7 @@ export default async function WeeklyReviewPage() {
                               )}
 
                               {formattedDate && (
-                                <span className="text-gray-500 dark:text-gray-400">
+                                <span className="text-[var(--text-secondary)]">
                                   Completed {formattedDate}
                                 </span>
                               )}
@@ -299,7 +299,7 @@ export default async function WeeklyReviewPage() {
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+              <h2 className="text-lg sm:text-xl font-bold text-[var(--text-primary)]">
                 Missed This Week
               </h2>
               <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 dark:bg-red-950 dark:text-red-300">
@@ -309,14 +309,14 @@ export default async function WeeklyReviewPage() {
           </div>
 
           {missedThisWeek.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-gray-300 bg-white p-6 sm:p-8 text-center shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+            <div className="rounded-xl border border-dashed border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-6 sm:p-8 text-center shadow-xs transition-colors">
+              <p className="text-sm text-[var(--text-secondary)]">
                 🎉 No missed deadlines this week!
               </p>
             </div>
           ) : (
-            <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
-              <ul className="divide-y divide-gray-200 dark:divide-zinc-800">
+            <div className="overflow-hidden rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md shadow-xs transition-colors">
+              <ul className="divide-y divide-[var(--border-color)]">
                 {missedThisWeek.map((task) => {
                   const goalTitle = task.goal_id ? goalMap.get(task.goal_id) : null
                   const formattedDueDate = task.due_date
@@ -330,7 +330,7 @@ export default async function WeeklyReviewPage() {
                   return (
                     <li
                       key={task.id}
-                      className="p-4 sm:p-5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs bg-red-50/20 dark:bg-red-950/10 hover:bg-red-50/40 dark:hover:bg-red-950/20"
+                      className="p-4 sm:p-5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs bg-red-500/10 hover:bg-red-500/15"
                     >
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <div className="flex items-start gap-3 min-w-0">
@@ -338,11 +338,11 @@ export default async function WeeklyReviewPage() {
                             !
                           </span>
                           <div className="min-w-0">
-                            <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white break-words">
+                            <h3 className="text-sm sm:text-base font-semibold text-[var(--text-primary)] break-words">
                               {task.title}
                             </h3>
                             {task.description && (
-                              <p className="mt-0.5 text-xs sm:text-sm text-gray-500 dark:text-gray-400 line-clamp-1 break-words">
+                              <p className="mt-0.5 text-xs sm:text-sm text-[var(--text-secondary)] line-clamp-1 break-words">
                                 {task.description}
                               </p>
                             )}
@@ -381,7 +381,7 @@ export default async function WeeklyReviewPage() {
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+              <h2 className="text-lg sm:text-xl font-bold text-[var(--text-primary)]">
                 Goals Worked On
               </h2>
               <span className="inline-flex items-center rounded-full bg-purple-100 px-2.5 py-0.5 text-xs font-semibold text-purple-800 dark:bg-purple-950 dark:text-purple-300">
@@ -397,8 +397,8 @@ export default async function WeeklyReviewPage() {
           </div>
 
           {goalsWorkedOn.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-gray-300 bg-white p-6 sm:p-8 text-center shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+            <div className="rounded-xl border border-dashed border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-6 sm:p-8 text-center shadow-xs transition-colors">
+              <p className="text-sm text-[var(--text-secondary)]">
                 No goals had completed tasks this week.
               </p>
             </div>
@@ -420,11 +420,11 @@ export default async function WeeklyReviewPage() {
                 return (
                   <div
                     key={goal.id}
-                    className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:border-gray-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
+                    className="flex flex-col justify-between rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-5 sm:p-6 shadow-xs transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md"
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2">
-                        <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white break-words">
+                        <h3 className="text-base sm:text-lg font-semibold text-[var(--text-primary)] break-words">
                           {goal.title}
                         </h3>
                         <span className="inline-flex items-center rounded-md bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-700 dark:bg-purple-950/60 dark:text-purple-300">
@@ -432,7 +432,7 @@ export default async function WeeklyReviewPage() {
                         </span>
                       </div>
                       {goal.description && (
-                        <p className="mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-2 break-words">
+                        <p className="mt-2 text-xs sm:text-sm text-[var(--text-secondary)] line-clamp-2 break-words">
                           {goal.description}
                         </p>
                       )}
@@ -441,11 +441,11 @@ export default async function WeeklyReviewPage() {
                     <div className="mt-6 space-y-4">
                       {/* Progress Bar */}
                       <div>
-                        <div className="flex justify-between text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">
+                        <div className="flex justify-between text-xs font-medium text-[var(--text-secondary)] mb-1.5">
                           <span>Progress</span>
                           <span>{progress}%</span>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-zinc-800 overflow-hidden">
+                        <div className="w-full bg-black/10 dark:bg-white/10 rounded-full h-2.5 overflow-hidden">
                           <div
                             className={`h-2.5 rounded-full transition-all duration-300 ${
                               progress === 100
@@ -460,9 +460,9 @@ export default async function WeeklyReviewPage() {
                       </div>
 
                       {/* Target Date */}
-                      <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-zinc-800 text-xs text-gray-500 dark:text-gray-400">
+                      <div className="flex items-center justify-between pt-2 border-t border-[var(--border-color)] text-xs text-[var(--text-secondary)]">
                         <span>Target Date:</span>
-                        <span className="font-medium text-gray-700 dark:text-gray-300">
+                        <span className="font-medium text-[var(--text-primary)]">
                           {formattedTargetDate}
                         </span>
                       </div>
@@ -477,3 +477,4 @@ export default async function WeeklyReviewPage() {
     </div>
   )
 }
+

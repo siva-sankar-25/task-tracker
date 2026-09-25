@@ -92,30 +92,30 @@ export default function NewTaskPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
+    <div className="min-h-screen text-[var(--text-primary)]">
       <Navbar userName={userName} userEmail={userEmail} />
 
       <main className="mx-auto max-w-2xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-primary)]">
               Create New Task
             </h1>
-            <p className="mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-1 text-xs sm:text-sm text-[var(--text-secondary)]">
               Add a new task, assign a priority, and link to a milestone goal.
             </p>
           </div>
           <Link
             href="/tasks"
-            className="text-xs sm:text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors self-start sm:self-auto"
+            className="text-xs sm:text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors self-start sm:self-auto"
           >
             ← Back to Tasks
           </Link>
         </div>
 
-        <div className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
+        <div className="rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-5 sm:p-6 shadow-xs transition-colors">
           {error && (
-            <div className="mb-6 rounded-md bg-red-50 p-4 text-sm text-red-700 dark:bg-red-950/80 dark:text-red-200 border border-red-200 dark:border-red-900">
+            <div className="mb-6 rounded-md bg-red-500/10 p-4 text-sm text-red-600 dark:text-red-300 border border-red-500/20">
               {error}
             </div>
           )}
@@ -124,7 +124,7 @@ export default function NewTaskPage() {
             <div>
               <label
                 htmlFor="title"
-                className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1"
               >
                 Task Title <span className="text-red-500">*</span>
               </label>
@@ -136,14 +136,14 @@ export default function NewTaskPage() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g., Set up database schema, Review PR"
-                className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:placeholder-zinc-500 transition-colors"
+                className="block w-full rounded-md border border-[var(--border-color)] bg-black/5 dark:bg-white/5 px-3 py-2 text-[var(--text-primary)] placeholder-[var(--text-secondary)]/60 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm transition-colors"
               />
             </div>
 
             <div>
               <label
                 htmlFor="description"
-                className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1"
               >
                 Description (Optional)
               </label>
@@ -154,7 +154,7 @@ export default function NewTaskPage() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Add more details about what needs to be done..."
-                className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:placeholder-zinc-500 transition-colors"
+                className="block w-full rounded-md border border-[var(--border-color)] bg-black/5 dark:bg-white/5 px-3 py-2 text-[var(--text-primary)] placeholder-[var(--text-secondary)]/60 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm transition-colors"
               />
             </div>
 
@@ -162,7 +162,7 @@ export default function NewTaskPage() {
               <div>
                 <label
                   htmlFor="due_date"
-                  className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  className="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1"
                 >
                   Due Date (Optional)
                 </label>
@@ -172,14 +172,14 @@ export default function NewTaskPage() {
                   type="date"
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)}
-                  className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:placeholder-zinc-500 transition-colors"
+                  className="block w-full rounded-md border border-[var(--border-color)] bg-black/5 dark:bg-white/5 px-3 py-2 text-[var(--text-primary)] placeholder-[var(--text-secondary)]/60 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm transition-colors"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="priority"
-                  className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  className="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1"
                 >
                   Priority
                 </label>
@@ -188,7 +188,7 @@ export default function NewTaskPage() {
                   name="priority"
                   value={priority}
                   onChange={(e) => setPriority(e.target.value)}
-                  className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm dark:bg-zinc-800 dark:border-zinc-700 dark:text-white transition-colors"
+                  className="block w-full rounded-md border border-[var(--border-color)] bg-[var(--card-bg)] px-3 py-2 text-[var(--text-primary)] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm transition-colors"
                 >
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
@@ -200,7 +200,7 @@ export default function NewTaskPage() {
             <div>
               <label
                 htmlFor="goal"
-                className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1"
               >
                 Linked Goal (Optional)
               </label>
@@ -210,7 +210,7 @@ export default function NewTaskPage() {
                 value={goalId}
                 onChange={(e) => setGoalId(e.target.value)}
                 disabled={loadingGoals}
-                className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm dark:bg-zinc-800 dark:border-zinc-700 dark:text-white disabled:opacity-50 transition-colors"
+                className="block w-full rounded-md border border-[var(--border-color)] bg-[var(--card-bg)] px-3 py-2 text-[var(--text-primary)] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm disabled:opacity-50 transition-colors"
               >
                 <option value="">None (No Goal)</option>
                 {goals.map((goal) => (
@@ -220,14 +220,14 @@ export default function NewTaskPage() {
                 ))}
               </select>
               {loadingGoals && (
-                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Loading goals...</p>
+                <p className="mt-1 text-xs text-[var(--text-secondary)]">Loading goals...</p>
               )}
             </div>
 
-            <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center sm:justify-end gap-3 pt-4 border-t border-gray-100 dark:border-zinc-800">
+            <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center sm:justify-end gap-3 pt-4 border-t border-[var(--border-color)]">
               <Link
                 href="/tasks"
-                className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-300 dark:hover:bg-zinc-700 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs"
+                className="inline-flex justify-center rounded-md border border-[var(--border-color)] bg-black/5 dark:bg-white/5 px-4 py-2 text-sm font-medium text-[var(--text-primary)] hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs"
               >
                 Cancel
               </Link>
@@ -245,3 +245,4 @@ export default function NewTaskPage() {
     </div>
   )
 }
+

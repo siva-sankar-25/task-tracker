@@ -28,10 +28,10 @@ export default function CalendarDayCell({
       ref={setNodeRef}
       className={`min-h-[105px] sm:min-h-[125px] flex flex-col rounded-lg border p-1.5 sm:p-2 transition-colors ${
         isOver
-          ? 'ring-2 ring-blue-500 bg-blue-50/80 dark:bg-blue-950/60 border-blue-400 dark:border-blue-500'
+          ? 'ring-2 ring-blue-500 bg-blue-500/15 border-blue-400 dark:border-blue-500'
           : isCurrentMonth
-          ? 'bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800/80'
-          : 'bg-gray-50/60 dark:bg-zinc-950/40 border-gray-100 dark:border-zinc-900/60 text-gray-400 dark:text-zinc-600'
+          ? 'bg-black/5 dark:bg-white/5 border-[var(--border-color)]'
+          : 'bg-black/10 dark:bg-white/10 border-[var(--border-color)]/50 text-[var(--text-secondary)] opacity-60'
       }`}
     >
       {/* Day header */}
@@ -41,14 +41,14 @@ export default function CalendarDayCell({
             isToday
               ? 'bg-blue-600 text-white font-bold'
               : isCurrentMonth
-              ? 'text-gray-900 dark:text-zinc-100'
-              : 'text-gray-400 dark:text-zinc-600'
+              ? 'text-[var(--text-primary)]'
+              : 'text-[var(--text-secondary)]'
           }`}
         >
           {dayNumber}
         </span>
         {tasks.length > 0 && (
-          <span className="text-[10px] font-medium text-gray-400 dark:text-zinc-500">
+          <span className="text-[10px] font-medium text-[var(--text-secondary)]">
             {tasks.length} {tasks.length === 1 ? 'task' : 'tasks'}
           </span>
         )}
@@ -63,3 +63,4 @@ export default function CalendarDayCell({
     </div>
   )
 }
+

@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { forceCleanWhiteView } from '@/lib/theme'
 
 export default function LogoutButton() {
   const router = useRouter()
@@ -13,6 +14,7 @@ export default function LogoutButton() {
     try {
       const supabase = createClient()
       await supabase.auth.signOut()
+      forceCleanWhiteView()
       router.push('/login')
       router.refresh()
     } catch (error) {

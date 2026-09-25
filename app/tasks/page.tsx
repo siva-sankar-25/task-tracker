@@ -117,16 +117,16 @@ export default async function TasksPage(props: TasksPageProps) {
     statusFilter !== 'all' || priorityFilter !== 'all' || sortBy !== 'due_date'
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
+    <div className="min-h-screen text-[var(--text-primary)]">
       <Navbar userName={displayName} userEmail={user.email} />
 
       <main className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 sm:pb-6 border-b border-gray-200 dark:border-zinc-800 gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 sm:pb-6 border-b border-[var(--border-color)] gap-4">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-primary)]">
               Tasks
             </h1>
-            <p className="mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-1 text-xs sm:text-sm text-[var(--text-secondary)]">
               Manage your tasks, filter by status and priority, and track progress.
             </p>
           </div>
@@ -139,13 +139,13 @@ export default async function TasksPage(props: TasksPageProps) {
         </div>
 
         {tasksError && (
-          <div className="rounded-md bg-red-50 p-4 text-sm text-red-700 dark:bg-red-950 dark:text-red-200 border border-red-200 dark:border-red-900">
+          <div className="rounded-md bg-red-500/10 p-4 text-sm text-red-600 dark:text-red-300 border border-red-500/20">
             Error loading tasks: {tasksError.message}
           </div>
         )}
 
         {/* Filter & Sort Controls */}
-        <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
+        <div className="rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-4 shadow-xs transition-colors">
           <TaskFilters
             currentStatus={statusFilter}
             currentPriority={priorityFilter}
@@ -155,11 +155,11 @@ export default async function TasksPage(props: TasksPageProps) {
 
         <div>
           {tasks.length === 0 ? (
-            <div className="text-center py-12 rounded-xl border-2 border-dashed border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 sm:p-8 transition-colors">
-              <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+            <div className="text-center py-12 rounded-xl border-2 border-dashed border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md p-6 sm:p-8 transition-colors">
+              <h3 className="text-base font-semibold text-[var(--text-primary)]">
                 {isFiltered ? 'No matching tasks' : 'No tasks yet'}
               </h3>
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-1 text-sm text-[var(--text-secondary)]">
                 {isFiltered
                   ? 'Try adjusting your filters or sort options.'
                   : 'You have not added any tasks yet. Create one to get started.'}
@@ -168,7 +168,7 @@ export default async function TasksPage(props: TasksPageProps) {
                 {isFiltered ? (
                   <Link
                     href="/tasks"
-                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs cursor-pointer"
+                    className="inline-flex items-center rounded-md border border-[var(--border-color)] bg-black/5 dark:bg-white/5 px-3.5 py-2 text-sm font-medium text-[var(--text-primary)] hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs cursor-pointer"
                   >
                     Clear Filters
                   </Link>
@@ -183,8 +183,8 @@ export default async function TasksPage(props: TasksPageProps) {
               </div>
             </div>
           ) : (
-            <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
-              <ul className="divide-y divide-gray-200 dark:divide-zinc-800">
+            <div className="overflow-hidden rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] backdrop-blur-md shadow-xs transition-colors">
+              <ul className="divide-y divide-[var(--border-color)]">
                 {tasks.map((task) => {
                   const goalTitle = task.goal_id
                     ? goalMap.get(task.goal_id)
@@ -203,8 +203,8 @@ export default async function TasksPage(props: TasksPageProps) {
                       key={task.id}
                       className={`p-4 sm:p-5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xs ${
                         isDone
-                          ? 'bg-gray-50/70 dark:bg-zinc-900/40 hover:bg-gray-100/60 dark:hover:bg-zinc-800/40'
-                          : 'hover:bg-gray-50/60 dark:hover:bg-zinc-800/30'
+                          ? 'bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10'
+                          : 'hover:bg-black/5 dark:hover:bg-white/5'
                       }`}
                     >
                       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -214,7 +214,7 @@ export default async function TasksPage(props: TasksPageProps) {
                           taskTitle={task.title}
                         >
                           {task.description && (
-                            <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400 break-words">
+                            <p className="mt-1 text-xs sm:text-sm text-[var(--text-secondary)] break-words">
                               {task.description}
                             </p>
                           )}
@@ -239,7 +239,7 @@ export default async function TasksPage(props: TasksPageProps) {
 
                             {/* Due date */}
                             {formattedDueDate && (
-                              <span className="inline-flex items-center gap-1 text-gray-500 dark:text-gray-400">
+                              <span className="inline-flex items-center gap-1 text-[var(--text-secondary)]">
                                 <span>📅</span> Due {formattedDueDate}
                               </span>
                             )}
@@ -250,7 +250,7 @@ export default async function TasksPage(props: TasksPageProps) {
                         <div className="flex items-center self-end sm:self-center gap-1 sm:gap-2 shrink-0">
                           <Link
                             href={`/tasks/${task.id}/edit`}
-                            className="inline-flex items-center justify-center rounded-md p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40 dark:hover:text-blue-400 transition-all duration-200 ease-out hover:-translate-y-0.5"
+                            className="inline-flex items-center justify-center rounded-md p-1.5 text-[var(--text-secondary)] hover:text-blue-600 hover:bg-blue-500/10 transition-all duration-200 ease-out hover:-translate-y-0.5"
                             title="Edit task"
                             aria-label={`Edit task ${task.title}`}
                           >
@@ -286,3 +286,4 @@ export default async function TasksPage(props: TasksPageProps) {
     </div>
   )
 }
+

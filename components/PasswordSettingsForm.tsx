@@ -50,13 +50,13 @@ export default function PasswordSettingsForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {message && (
-        <div className="rounded-md bg-green-50 p-3.5 text-xs sm:text-sm text-green-700 dark:bg-green-950/70 dark:text-green-200 border border-green-200 dark:border-green-900">
+        <div className="rounded-md bg-green-500/10 p-3.5 text-xs sm:text-sm text-green-700 dark:text-green-300 border border-green-500/20">
           {message}
         </div>
       )}
 
       {error && (
-        <div className="rounded-md bg-red-50 p-3.5 text-xs sm:text-sm text-red-700 dark:bg-red-950/70 dark:text-red-200 border border-red-200 dark:border-red-900">
+        <div className="rounded-md bg-red-500/10 p-3.5 text-xs sm:text-sm text-red-600 dark:text-red-300 border border-red-500/20">
           {error}
         </div>
       )}
@@ -65,7 +65,7 @@ export default function PasswordSettingsForm() {
         <div>
           <label
             htmlFor="new-password"
-            className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1"
           >
             New Password
           </label>
@@ -77,14 +77,14 @@ export default function PasswordSettingsForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="••••••••"
-            className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-xs sm:text-sm dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:placeholder-zinc-500 transition-colors"
+            className="block w-full rounded-md border border-[var(--border-color)] bg-black/5 dark:bg-white/5 px-3 py-2 text-[var(--text-primary)] placeholder-[var(--text-secondary)]/60 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-xs sm:text-sm transition-colors"
           />
         </div>
 
         <div>
           <label
             htmlFor="confirm-password"
-            className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1"
           >
             Confirm New Password
           </label>
@@ -96,7 +96,7 @@ export default function PasswordSettingsForm() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="••••••••"
-            className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-xs sm:text-sm dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:placeholder-zinc-500 transition-colors"
+            className="block w-full rounded-md border border-[var(--border-color)] bg-black/5 dark:bg-white/5 px-3 py-2 text-[var(--text-primary)] placeholder-[var(--text-secondary)]/60 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-xs sm:text-sm transition-colors"
           />
         </div>
       </div>
@@ -113,3 +113,4 @@ export default function PasswordSettingsForm() {
     </form>
   )
 }
+

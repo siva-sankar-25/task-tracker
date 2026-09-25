@@ -51,7 +51,7 @@ export default function TaskFilters({
         <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
           <label
             htmlFor="status-filter"
-            className="text-xs font-semibold text-gray-700 dark:text-gray-300"
+            className="text-xs font-semibold text-[var(--text-primary)]"
           >
             Status:
           </label>
@@ -60,7 +60,7 @@ export default function TaskFilters({
             value={currentStatus}
             onChange={(e) => updateParam('status', e.target.value)}
             disabled={isPending}
-            className="w-full sm:w-auto rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white transition-colors"
+            className="w-full sm:w-auto rounded-md border border-[var(--border-color)] bg-[var(--card-bg)] px-2.5 py-1.5 text-xs text-[var(--text-primary)] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors"
           >
             <option value="all">All</option>
             <option value="todo">To Do</option>
@@ -73,7 +73,7 @@ export default function TaskFilters({
         <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
           <label
             htmlFor="priority-filter"
-            className="text-xs font-semibold text-gray-700 dark:text-gray-300"
+            className="text-xs font-semibold text-[var(--text-primary)]"
           >
             Priority:
           </label>
@@ -82,7 +82,7 @@ export default function TaskFilters({
             value={currentPriority}
             onChange={(e) => updateParam('priority', e.target.value)}
             disabled={isPending}
-            className="w-full sm:w-auto rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white transition-colors"
+            className="w-full sm:w-auto rounded-md border border-[var(--border-color)] bg-[var(--card-bg)] px-2.5 py-1.5 text-xs text-[var(--text-primary)] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors"
           >
             <option value="all">All</option>
             <option value="high">High</option>
@@ -95,7 +95,7 @@ export default function TaskFilters({
         <div className="col-span-2 sm:col-auto flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
           <label
             htmlFor="sort-control"
-            className="text-xs font-semibold text-gray-700 dark:text-gray-300"
+            className="text-xs font-semibold text-[var(--text-primary)]"
           >
             Sort by:
           </label>
@@ -104,7 +104,7 @@ export default function TaskFilters({
             value={currentSort || 'due_date'}
             onChange={(e) => updateParam('sort', e.target.value)}
             disabled={isPending}
-            className="w-full sm:w-auto rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white transition-colors"
+            className="w-full sm:w-auto rounded-md border border-[var(--border-color)] bg-[var(--card-bg)] px-2.5 py-1.5 text-xs text-[var(--text-primary)] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors"
           >
             <option value="due_date">Due Date</option>
             <option value="priority">Priority</option>
@@ -126,7 +126,7 @@ export default function TaskFilters({
         )}
 
         {isPending && (
-          <span className="text-xs text-gray-400 dark:text-zinc-500 animate-pulse">
+          <span className="text-xs text-[var(--text-secondary)] animate-pulse">
             Filtering...
           </span>
         )}
@@ -134,3 +134,4 @@ export default function TaskFilters({
     </div>
   )
 }
+
