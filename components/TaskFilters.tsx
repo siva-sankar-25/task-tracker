@@ -45,88 +45,92 @@ export default function TaskFilters({
     (currentSort !== 'due_date' && currentSort !== '')
 
   return (
-    <div className="flex flex-wrap items-center gap-4 py-2">
-      {/* Status Filter */}
-      <div className="flex items-center gap-2">
-        <label
-          htmlFor="status-filter"
-          className="text-xs font-medium text-gray-700 dark:text-gray-300"
-        >
-          Status:
-        </label>
-        <select
-          id="status-filter"
-          value={currentStatus}
-          onChange={(e) => updateParam('status', e.target.value)}
-          disabled={isPending}
-          className="rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
-        >
-          <option value="all">All</option>
-          <option value="todo">To Do</option>
-          <option value="in_progress">In Progress</option>
-          <option value="done">Done</option>
-        </select>
+    <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-4 py-1">
+      <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-4 w-full sm:w-auto">
+        {/* Status Filter */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+          <label
+            htmlFor="status-filter"
+            className="text-xs font-semibold text-gray-700 dark:text-gray-300"
+          >
+            Status:
+          </label>
+          <select
+            id="status-filter"
+            value={currentStatus}
+            onChange={(e) => updateParam('status', e.target.value)}
+            disabled={isPending}
+            className="w-full sm:w-auto rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white transition-colors"
+          >
+            <option value="all">All</option>
+            <option value="todo">To Do</option>
+            <option value="in_progress">In Progress</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+
+        {/* Priority Filter */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+          <label
+            htmlFor="priority-filter"
+            className="text-xs font-semibold text-gray-700 dark:text-gray-300"
+          >
+            Priority:
+          </label>
+          <select
+            id="priority-filter"
+            value={currentPriority}
+            onChange={(e) => updateParam('priority', e.target.value)}
+            disabled={isPending}
+            className="w-full sm:w-auto rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white transition-colors"
+          >
+            <option value="all">All</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+
+        {/* Sort Control */}
+        <div className="col-span-2 sm:col-auto flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+          <label
+            htmlFor="sort-control"
+            className="text-xs font-semibold text-gray-700 dark:text-gray-300"
+          >
+            Sort by:
+          </label>
+          <select
+            id="sort-control"
+            value={currentSort || 'due_date'}
+            onChange={(e) => updateParam('sort', e.target.value)}
+            disabled={isPending}
+            className="w-full sm:w-auto rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white transition-colors"
+          >
+            <option value="due_date">Due Date</option>
+            <option value="priority">Priority</option>
+          </select>
+        </div>
       </div>
 
-      {/* Priority Filter */}
-      <div className="flex items-center gap-2">
-        <label
-          htmlFor="priority-filter"
-          className="text-xs font-medium text-gray-700 dark:text-gray-300"
-        >
-          Priority:
-        </label>
-        <select
-          id="priority-filter"
-          value={currentPriority}
-          onChange={(e) => updateParam('priority', e.target.value)}
-          disabled={isPending}
-          className="rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
-        >
-          <option value="all">All</option>
-          <option value="high">High</option>
-          <option value="medium">Medium</option>
-          <option value="low">Low</option>
-        </select>
+      {/* Reset & Loading indicators */}
+      <div className="flex items-center justify-between sm:justify-start gap-3 pt-1 sm:pt-0">
+        {hasActiveFilters && (
+          <button
+            type="button"
+            onClick={resetFilters}
+            disabled={isPending}
+            className="text-xs font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline cursor-pointer"
+          >
+            Reset filters
+          </button>
+        )}
+
+        {isPending && (
+          <span className="text-xs text-gray-400 dark:text-zinc-500 animate-pulse">
+            Filtering...
+          </span>
+        )}
       </div>
-
-      {/* Sort Control */}
-      <div className="flex items-center gap-2">
-        <label
-          htmlFor="sort-control"
-          className="text-xs font-medium text-gray-700 dark:text-gray-300"
-        >
-          Sort by:
-        </label>
-        <select
-          id="sort-control"
-          value={currentSort || 'due_date'}
-          onChange={(e) => updateParam('sort', e.target.value)}
-          disabled={isPending}
-          className="rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
-        >
-          <option value="due_date">Due Date</option>
-          <option value="priority">Priority</option>
-        </select>
-      </div>
-
-      {/* Reset Link */}
-      {hasActiveFilters && (
-        <button
-          type="button"
-          onClick={resetFilters}
-          disabled={isPending}
-          className="text-xs font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline cursor-pointer"
-        >
-          Reset filters
-        </button>
-      )}
-
-      {isPending && (
-        <span className="text-xs text-gray-400 dark:text-zinc-500 animate-pulse">
-          Filtering...
-        </span>
-      )}
     </div>
   )
 }

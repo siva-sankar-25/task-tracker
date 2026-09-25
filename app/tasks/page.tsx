@@ -113,35 +113,35 @@ export default async function TasksPage(props: TasksPageProps) {
     statusFilter !== 'all' || priorityFilter !== 'all' || sortBy !== 'due_date'
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-950">
+    <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
       <Navbar userEmail={user.email} />
 
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-6 border-b border-gray-200 dark:border-zinc-800 gap-4">
+      <main className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 sm:pb-6 border-b border-gray-200 dark:border-zinc-800 gap-4">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               Tasks
             </h1>
-            <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
               Manage your tasks, filter by status and priority, and track progress.
             </p>
           </div>
           <Link
             href="/tasks/new"
-            className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+            className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors self-start sm:self-auto"
           >
             + New Task
           </Link>
         </div>
 
         {tasksError && (
-          <div className="mt-6 rounded-md bg-red-50 p-4 text-sm text-red-700 dark:bg-red-950 dark:text-red-200 border border-red-200 dark:border-red-900">
+          <div className="rounded-md bg-red-50 p-4 text-sm text-red-700 dark:bg-red-950 dark:text-red-200 border border-red-200 dark:border-red-900">
             Error loading tasks: {tasksError.message}
           </div>
         )}
 
         {/* Filter & Sort Controls */}
-        <div className="mt-6 rounded-lg border border-gray-200 bg-white p-4 shadow-xs dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
           <TaskFilters
             currentStatus={statusFilter}
             currentPriority={priorityFilter}
@@ -149,9 +149,9 @@ export default async function TasksPage(props: TasksPageProps) {
           />
         </div>
 
-        <div className="mt-6">
+        <div>
           {tasks.length === 0 ? (
-            <div className="text-center py-12 rounded-lg border-2 border-dashed border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-8">
+            <div className="text-center py-12 rounded-xl border-2 border-dashed border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 sm:p-8 transition-colors">
               <h3 className="text-base font-semibold text-gray-900 dark:text-white">
                 {isFiltered ? 'No matching tasks' : 'No tasks yet'}
               </h3>
@@ -164,7 +164,7 @@ export default async function TasksPage(props: TasksPageProps) {
                 {isFiltered ? (
                   <Link
                     href="/tasks"
-                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 transition-colors"
+                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-colors"
                   >
                     Clear Filters
                   </Link>
@@ -179,7 +179,7 @@ export default async function TasksPage(props: TasksPageProps) {
               </div>
             </div>
           ) : (
-            <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-xs dark:border-zinc-800 dark:bg-zinc-900">
+            <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
               <ul className="divide-y divide-gray-200 dark:divide-zinc-800">
                 {tasks.map((task) => {
                   const goalTitle = task.goal_id
@@ -197,23 +197,23 @@ export default async function TasksPage(props: TasksPageProps) {
                   return (
                     <li
                       key={task.id}
-                      className={`p-4 sm:p-6 transition-colors ${
+                      className={`p-4 sm:p-5 transition-colors ${
                         isDone
                           ? 'bg-gray-50/70 dark:bg-zinc-900/40'
                           : 'hover:bg-gray-50/50 dark:hover:bg-zinc-800/30'
                       }`}
                     >
-                      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="flex items-start gap-3">
-                          <div className="pt-0.5">
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-start gap-3 min-w-0">
+                          <div className="pt-0.5 shrink-0">
                             <TaskStatusControl
                               taskId={task.id}
                               initialStatus={task.status}
                             />
                           </div>
-                          <div>
+                          <div className="min-w-0">
                             <h2
-                              className={`text-base font-semibold ${
+                              className={`text-sm sm:text-base font-semibold break-words ${
                                 isDone
                                   ? 'line-through text-gray-400 dark:text-zinc-500'
                                   : 'text-gray-900 dark:text-white'
@@ -222,7 +222,7 @@ export default async function TasksPage(props: TasksPageProps) {
                               {task.title}
                             </h2>
                             {task.description && (
-                              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                              <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400 break-words">
                                 {task.description}
                               </p>
                             )}

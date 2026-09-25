@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import Navbar from '@/components/Navbar'
 import TaskStatusControl from '@/components/TaskStatusControl'
+import NotificationReminder from '@/components/NotificationReminder'
 import { Task, Goal } from '@/types/database'
 
 export default async function DashboardPage() {
@@ -44,6 +45,13 @@ export default async function DashboardPage() {
     .filter((t) => t.due_date && t.due_date <= today && t.status !== 'done')
     .sort((a, b) => (a.due_date || '').localeCompare(b.due_date || ''))
 
+  const overdueCount = todayAndOverdueTasks.filter(
+    (t) => t.due_date && t.due_date < today
+  ).length
+  const dueTodayCount = todayAndOverdueTasks.filter(
+    (t) => t.due_date && t.due_date === today
+  ).length
+
   // Helper for goal progress calculation
   const getGoalProgress = (goal: Goal) => {
     if (typeof goal.progress === 'number' && !isNaN(goal.progress)) {
@@ -80,31 +88,31 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-950">
+    <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
       <Navbar userEmail={user.email} />
 
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+      <main className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
         {/* Welcome Banner */}
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-xs dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Welcome, {user.email}
               </h1>
               <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Here is an overview of your agenda for today and goal progression.
+                Track your agenda for today, overdue tasks, and milestone progression.
               </p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <Link
                 href="/tasks/new"
-                className="inline-flex items-center justify-center rounded-md bg-blue-600 px-3.5 py-2 text-sm font-medium text-white shadow-xs hover:bg-blue-700 transition-colors"
+                className="inline-flex flex-1 sm:flex-none items-center justify-center rounded-md bg-blue-600 px-3.5 py-2 text-sm font-medium text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
               >
                 + New Task
               </Link>
               <Link
                 href="/goals/new"
-                className="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-colors"
+                className="inline-flex flex-1 sm:flex-none items-center justify-center rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700 transition-colors"
               >
                 + New Goal
               </Link>
@@ -112,11 +120,45 @@ export default async function DashboardPage() {
           </div>
         </div>
 
+        {/* Highlighted Reminder Banner for Due/Overdue Tasks */}
+        {todayAndOverdueTasks.length > 0 && (
+          <div className="relative overflow-hidden rounded-xl border border-amber-300 bg-gradient-to-r from-amber-500/15 via-red-500/10 to-amber-500/15 p-4 sm:p-5 shadow-xs dark:border-amber-700/50 dark:from-amber-950/50 dark:via-red-950/30 dark:to-zinc-900">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+              <div className="flex items-start gap-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber-500/20 text-lg dark:bg-amber-500/30">
+                  ⚡
+                </span>
+                <div>
+                  <h3 className="text-base font-bold text-amber-950 dark:text-amber-200">
+                    {todayAndOverdueTasks.length}{' '}
+                    {todayAndOverdueTasks.length === 1
+                      ? 'task needs attention'
+                      : 'tasks need attention'}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-amber-900/80 dark:text-amber-300/80">
+                    {overdueCount > 0 && `${overdueCount} overdue`}
+                    {overdueCount > 0 && dueTodayCount > 0 && ' • '}
+                    {dueTodayCount > 0 && `${dueTodayCount} due today`}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 self-start sm:self-center">
+                <NotificationReminder
+                  dueTasksCount={todayAndOverdueTasks.length}
+                  overdueCount={overdueCount}
+                  dueTodayCount={dueTodayCount}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Section 1: Today & Overdue */}
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
                 Today & Overdue
               </h2>
               {todayAndOverdueTasks.length > 0 && (
@@ -127,14 +169,14 @@ export default async function DashboardPage() {
             </div>
             <Link
               href="/tasks"
-              className="text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
+              className="text-xs sm:text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
             >
               View all tasks →
             </Link>
           </div>
 
           {todayAndOverdueTasks.length === 0 ? (
-            <div className="rounded-lg border border-dashed border-gray-300 bg-white p-8 text-center shadow-xs dark:border-zinc-800 dark:bg-zinc-900">
+            <div className="rounded-xl border border-dashed border-gray-300 bg-white p-6 sm:p-8 text-center shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
               <div className="text-3xl mb-2">🎉</div>
               <h3 className="text-base font-semibold text-gray-900 dark:text-white">
                 Nothing due — nice!
@@ -144,7 +186,7 @@ export default async function DashboardPage() {
               </p>
             </div>
           ) : (
-            <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-xs dark:border-zinc-800 dark:bg-zinc-900">
+            <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
               <ul className="divide-y divide-gray-200 dark:divide-zinc-800">
                 {todayAndOverdueTasks.map((task) => {
                   const goalTitle = task.goal_id
@@ -162,22 +204,22 @@ export default async function DashboardPage() {
                   return (
                     <li
                       key={task.id}
-                      className="p-4 transition-colors hover:bg-gray-50/50 dark:hover:bg-zinc-800/30"
+                      className="p-4 sm:p-5 transition-colors hover:bg-gray-50/50 dark:hover:bg-zinc-800/30"
                     >
                       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="flex items-start gap-3">
-                          <div className="pt-0.5">
+                        <div className="flex items-start gap-3 min-w-0">
+                          <div className="pt-0.5 shrink-0">
                             <TaskStatusControl
                               taskId={task.id}
                               initialStatus={task.status}
                             />
                           </div>
-                          <div>
-                            <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                          <div className="min-w-0">
+                            <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white break-words">
                               {task.title}
                             </h3>
                             {task.description && (
-                              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+                              <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400 line-clamp-2 break-words">
                                 {task.description}
                               </p>
                             )}
@@ -186,11 +228,13 @@ export default async function DashboardPage() {
                               <span
                                 className={`inline-flex items-center rounded-md px-2 py-0.5 font-medium ${
                                   isOverdue
-                                    ? 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300 font-semibold'
-                                    : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
+                                    ? 'bg-red-100 text-red-800 dark:bg-red-950/80 dark:text-red-300 font-semibold'
+                                    : 'bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300'
                                 }`}
                               >
-                                {isOverdue ? `⚠️ Overdue (${formattedDueDate})` : `📅 Due Today`}
+                                {isOverdue
+                                  ? `⚠️ Overdue (${formattedDueDate})`
+                                  : `📅 Due Today`}
                               </span>
 
                               {/* Priority tag */}
@@ -217,19 +261,19 @@ export default async function DashboardPage() {
         {/* Section 2: Goals progress */}
         <section className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
               Goals Progress
             </h2>
             <Link
               href="/goals"
-              className="text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
+              className="text-xs sm:text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
             >
               View all goals →
             </Link>
           </div>
 
           {goals.length === 0 ? (
-            <div className="rounded-lg border border-dashed border-gray-300 bg-white p-8 text-center shadow-xs dark:border-zinc-800 dark:bg-zinc-900">
+            <div className="rounded-xl border border-dashed border-gray-300 bg-white p-6 sm:p-8 text-center shadow-xs dark:border-zinc-800 dark:bg-zinc-900 transition-colors">
               <h3 className="text-base font-semibold text-gray-900 dark:text-white">
                 No goals yet
               </h3>
@@ -246,7 +290,7 @@ export default async function DashboardPage() {
               </div>
             </div>
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {goals.map((goal) => {
                 const progress = getGoalProgress(goal)
                 const formattedTargetDate = goal.target_date
@@ -260,14 +304,14 @@ export default async function DashboardPage() {
                 return (
                   <div
                     key={goal.id}
-                    className="flex flex-col justify-between rounded-lg border border-gray-200 bg-white p-6 shadow-xs transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+                    className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
                   >
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white break-words">
                         {goal.title}
                       </h3>
                       {goal.description && (
-                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+                        <p className="mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-2 break-words">
                           {goal.description}
                         </p>
                       )}
@@ -279,7 +323,7 @@ export default async function DashboardPage() {
                           <span>Progress</span>
                           <span>{progress}%</span>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-zinc-700 overflow-hidden">
+                        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-zinc-800 overflow-hidden">
                           <div
                             className={`h-2.5 rounded-full transition-all duration-300 ${
                               progress === 100

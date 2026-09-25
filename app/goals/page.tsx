@@ -46,36 +46,36 @@ export default async function GoalsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-950">
+    <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100">
       <Navbar userEmail={user.email} />
 
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-6 border-b border-gray-200 dark:border-zinc-800 gap-4">
+      <main className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 sm:pb-6 border-b border-gray-200 dark:border-zinc-800 gap-4">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               Goals
             </h1>
-            <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-              Track and manage your long-term objectives
+            <p className="mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+              Track and manage your long-term milestones and objectives.
             </p>
           </div>
           <Link
             href="/goals/new"
-            className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+            className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-xs hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors self-start sm:self-auto"
           >
             + New Goal
           </Link>
         </div>
 
         {goalsError && (
-          <div className="mt-6 rounded-md bg-red-50 p-4 text-sm text-red-700 dark:bg-red-950 dark:text-red-200 border border-red-200 dark:border-red-900">
+          <div className="rounded-md bg-red-50 p-4 text-sm text-red-700 dark:bg-red-950 dark:text-red-200 border border-red-200 dark:border-red-900">
             Error loading goals: {goalsError.message}
           </div>
         )}
 
-        <div className="mt-6">
+        <div>
           {goals.length === 0 ? (
-            <div className="text-center py-12 rounded-lg border-2 border-dashed border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-8">
+            <div className="text-center py-12 rounded-xl border-2 border-dashed border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 sm:p-8 transition-colors">
               <h3 className="text-base font-semibold text-gray-900 dark:text-white">
                 No goals yet
               </h3>
@@ -92,7 +92,7 @@ export default async function GoalsPage() {
               </div>
             </div>
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {goals.map((goal) => {
                 const progress = getGoalProgress(goal)
                 const formattedDate = goal.target_date
@@ -106,14 +106,14 @@ export default async function GoalsPage() {
                 return (
                   <div
                     key={goal.id}
-                    className="flex flex-col justify-between rounded-lg border border-gray-200 bg-white p-6 shadow-xs transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+                    className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xs transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
                   >
                     <div>
-                      <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white break-words">
                         {goal.title}
                       </h2>
                       {goal.description && (
-                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
+                        <p className="mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-3 break-words">
                           {goal.description}
                         </p>
                       )}
@@ -126,7 +126,7 @@ export default async function GoalsPage() {
                           <span>Progress</span>
                           <span>{progress}%</span>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-zinc-700 overflow-hidden">
+                        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-zinc-800 overflow-hidden">
                           <div
                             className={`h-2.5 rounded-full transition-all duration-300 ${
                               progress === 100
@@ -141,7 +141,7 @@ export default async function GoalsPage() {
                       </div>
 
                       {/* Target Date */}
-                      <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-zinc-800/80 text-xs text-gray-500 dark:text-gray-400">
+                      <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-zinc-800 text-xs text-gray-500 dark:text-gray-400">
                         <span>Target Date:</span>
                         <span className="font-medium text-gray-700 dark:text-gray-300">
                           {formattedDate}
